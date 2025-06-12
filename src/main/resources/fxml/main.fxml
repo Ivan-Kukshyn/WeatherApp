@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.weatherapp.controller.WeatherController"
+      stylesheets="@style.css"
+      spacing="20"
+      alignment="TOP_CENTER"
+      styleClass="main-container">
+
+    <!-- Секція пошуку та контролю -->
+    <HBox spacing="15" alignment="CENTER" styleClass="search-container">
+        <Label text="Місто:" styleClass="input-label"/>
+        <TextField fx:id="cityInput" promptText="Введіть назву міста" styleClass="city-input"/>
+        <Button text="Оновити" onAction="#onUpdateClicked" styleClass="primary-button"/>
+        <Button text="Історія" onAction="#onHistoryClicked" styleClass="secondary-button"/>
+    </HBox>
+
+    <!-- Повідомлення про помилку -->
+    <Label fx:id="labelWriteTheCity" styleClass="error-message" visible="false"/>
+
+    <VBox fx:id="factSectionContainer" spacing="10" alignment="CENTER" styleClass="fact-section">
+        <ImageView fx:id="weatherFactImage" fitWidth="300" preserveRatio="true"/>
+        <Label fx:id="weatherFactText"
+               wrapText="true"
+               maxWidth="400"
+               text="Цікавий факт про погоду буде тут"/>
+    </VBox>
+
+    <!-- Розділ погодних даних -->
+    <VBox fx:id="weatherSectionContainer" spacing="10" alignment="CENTER">
+        <HBox alignment="CENTER" spacing="30" styleClass="weather-container">
+            <GridPane hgap="15" vgap="10" styleClass="weather-grid">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="150"/>
+                    <ColumnConstraints halignment="LEFT" minWidth="100"/>
+                </columnConstraints>
+
+                <!-- Рядки погодних даних -->
+                <Label fx:id="labelTemp" text="Температура:" GridPane.rowIndex="0"/>
+                <Label fx:id="temperatureLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label fx:id="labelTempMin" text="Мін. температура:" GridPane.rowIndex="1"/>
+                <Label fx:id="tempMinLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label fx:id="labelTempMax" text="Макс. температура:" GridPane.rowIndex="2"/>
+                <Label fx:id="tempMaxLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label fx:id="labelDescription" text="Стан неба:" GridPane.rowIndex="3"/>
+                <Label fx:id="descriptionLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label fx:id="labelHumidity" text="Вологість:" GridPane.rowIndex="4"/>
+                <Label fx:id="humidityLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label fx:id="labelPressure" text="Тиск:" GridPane.rowIndex="5"/>
+                <Label fx:id="pressureLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Label fx:id="labelWind" text="Вітер:" GridPane.rowIndex="6"/>
+                <Label fx:id="windLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                <Label fx:id="labelWindDir" text="Напрям вітру:" GridPane.rowIndex="7"/>
+                <Label fx:id="windDirectionLabel" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                <Label fx:id="labelPop" text="Ймовірність опадів:" GridPane.rowIndex="8"/>
+                <Label fx:id="popLabel" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <!-- Секція міста та дати -->
+            <VBox alignment="CENTER" spacing="10" styleClass="location-container">
+                <Label fx:id="cityLabel" styleClass="city-label"/>
+                <Label fx:id="dateLabel" styleClass="date-label"/>
+            </VBox>
+        </HBox>
+
+        <!-- Розділ прогнозів -->
+        <VBox spacing="10" alignment="CENTER" styleClass="forecast-section">
+            <HBox fx:id="forecastContainer" spacing="15" alignment="CENTER" styleClass="forecast-container"/>
+        </VBox>
+    </VBox>
+</VBox>

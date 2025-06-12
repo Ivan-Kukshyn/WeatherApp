@@ -1,0 +1,85 @@
+@startuml
+left to right direction
+
+package "weatherapp" {
+    class WeatherApp {
+        + void start(Stage primaryStage)
+        + static void main(String[] args)
+    }
+}
+
+package "controller" {
+    class WeatherController {
+        + void initialize()
+        + void onUpdateClicked()
+    }
+}
+
+package "service" {
+    class WeatherService {
+        + WeatherData getWeatherByCity(String cityName)
+        + WeatherForecastResponse getWeatherForecast(String cityName)
+    }
+
+    class LoggingService {
+        + void logInfo(String message)
+        + void logError(String message, Throwable throwable)
+    }
+}
+
+package "repository" {
+    class WeatherRepository {
+        + Connection getConnection()
+        + void saveHistory(HistoryEntry entry)
+        + List<HistoryEntry> getAllHistory()
+        + void saveLog(String level, String message, Throwable throwable)
+        + List<LogEntry> getAllLogs()
+    }
+
+    class DatabaseManager {
+        + static Connection getConnection() throws SQLException
+    }
+}
+
+package "model" {
+    class WeatherData {
+        + Main getMain()
+        + List<Weather> getWeather()
+        + Wind getWind()
+        + String getFormattedDate()
+    }
+
+    class WeatherForecastResponse {
+        + List<WeatherData> getList()
+    }
+
+    class HistoryEntry {
+        + int id
+        + String city
+        + float temperature
+        + String description
+        + LocalDateTime timestamp
+    }
+
+    class LogEntry
+}
+
+' Relationships
+WeatherApp -> WeatherController : controls
+WeatherApp -> WeatherService : uses
+WeatherApp -> WeatherRepository : uses
+
+WeatherController -> WeatherService : uses
+WeatherController -> WeatherRepository : uses
+WeatherController -> HistoryEntry : creates history entries
+
+WeatherService -> WeatherData : works with
+WeatherService -> WeatherForecastResponse : works with
+
+WeatherRepository -> HistoryEntry : works with
+WeatherRepository -> LogEntry : logs events
+
+DatabaseManager -> Connection : creates and manages
+LoggingService -> WeatherRepository : uses
+
+@enduml
